@@ -7,12 +7,11 @@
         FROM Post
     </select>
 
-<!--    <select id="selectPost" resultType="domain.board.com.nhnacademy.jdbc.Post">-->
-<!--        SELECT *-->
-<!--        FROM Post-->
-<!--        WHERE id = #{id}-->
-<!--    </select>-->
-
+    <select id="selectPost" resultType="com.nhnacademy.jdbc.board.domain.Post">
+        SELECT *
+        FROM Post
+        WHERE id = #{postId}
+    </select>
 
     <insert id="insertPost" >
         INSERT INTO Post (title, content, user_id)

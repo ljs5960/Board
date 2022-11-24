@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post View</title>
+</head>
+<body>
+  <h1>게시글 상세보기</h1>
+
+  번호: <span th:text="${post.id}"></span> <br/>
+  제목: <span th:text="${post.title}"></span> <br/>
+  내용: <span th:text="${post.content}"></span> <br/>
+  작성자: <span th:text="${post.userId}"></span> <br/>
+  작성일시: <span th:text="${post.createdAt}"></span> <br/>
+</body>
+</html>

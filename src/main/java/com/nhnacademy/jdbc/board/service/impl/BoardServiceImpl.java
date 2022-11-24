@@ -19,8 +19,10 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.selectPosts();
     }
 
-//
-
+    @Override
+    public Post getPostById(Long postId) {
+        return boardMapper.selectPost(postId);
+    }
 
     @Override
 //    @Transactional

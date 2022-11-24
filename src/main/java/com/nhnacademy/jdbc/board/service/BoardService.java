@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface BoardService {
     List<Post> getPosts();
-//
-//    Optional<Post> getPost(Long id);
+
+    Post getPostById(Long postId);
 
     void insertPost(Post post);
 }
