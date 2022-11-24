@@ -17,6 +17,12 @@
         INSERT INTO Post (title, content, user_id)
         VALUES (#{title}, #{content}, #{userId})
     </insert>
+
+    <update id="updatePost">
+        UPDATE Post
+        SET title=#{title}, content=#{content}, modifier_id=#{modifierId}
+        WHERE id=#{id};
+    </update>
 </mapper>
 
 <!--    <insert id="insertStudent">-->

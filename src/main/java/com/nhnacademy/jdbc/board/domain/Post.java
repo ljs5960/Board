@@ -12,18 +12,22 @@ public class Post {
     private String content;
     private Long fileId;
     private String userId;
+    private String modifierId;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Boolean isDeleted;
     private Long parentPostId;
 
-    public Post(String title, String userId) {
+    public Post(String title, String content, String userId) {
         this.title = title;
+        this.content = content;
         this.userId = userId;
     }
 
-    public Post(String title, String content, String userId) {
-        this(title, userId);
+    public Post(Long id, String title, String content, String modifierId) {
+        this.id = id;
+        this.title = title;
         this.content = content;
+        this.modifierId = modifierId;
     }
 }

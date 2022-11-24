@@ -12,5 +12,7 @@
   내용: <span th:text="${post.content}"></span> <br/>
   작성자: <span th:text="${post.userId}"></span> <br/>
   작성일시: <span th:text="${post.createdAt}"></span> <br/>
+
+  <a th:href="@{'/update/' + ${post.id}}">수정하기</a>
 </body>
 </html>

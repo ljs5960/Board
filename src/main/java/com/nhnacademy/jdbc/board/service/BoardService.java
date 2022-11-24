@@ -9,4 +9,6 @@ public interface BoardService {
     Post getPostById(Long postId);
 
     void insertPost(Post post);
+
+    void updatePost(Post post);
 }

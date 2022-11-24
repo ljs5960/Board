@@ -56,4 +56,25 @@ public class BoardController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/update/{postId}")
+    public String updatePost(@PathVariable("postId") Long postId, ModelMap modelMap) {
+        Post post = boardService.getPostById(postId);
+        modelMap.put("post", post);
+
+        return "post/postUpdateForm";
+    }
+
+    @PostMapping("/update/{postId}")
+    public String updatePost(@RequestParam("title") String title,
+                             @RequestParam("content") String content,
+                             @PathVariable("postId") Long postId,
+                             HttpSession session) {
+        String modifierId = (String) session.getAttribute("LOGIN_SESSION");
+
+        Post post = new Post(postId, title, content, modifierId);
+        boardService.updatePost(post);
+
+        return "redirect:/";
+    }
 }

@@ -29,4 +29,9 @@ public class BoardServiceImpl implements BoardService {
     public void insertPost(Post post) {
         boardMapper.insertPost(post);
     }
+
+    @Override
+    public void updatePost(Post post) {
+        boardMapper.updatePost(post);
+    }
 }
