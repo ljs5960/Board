@@ -11,4 +11,6 @@ public interface BoardService {
     void insertPost(Post post);
 
     void updatePost(Post post);
+
+    void deletePost(Long postId);
 }

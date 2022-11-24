@@ -34,4 +34,9 @@ public class BoardServiceImpl implements BoardService {
     public void updatePost(Post post) {
         boardMapper.updatePost(post);
     }
+
+    @Override
+    public void deletePost(Long postId) {
+        boardMapper.deletePost(postId);
+    }
 }

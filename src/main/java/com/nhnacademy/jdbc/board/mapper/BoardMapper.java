@@ -14,9 +14,5 @@ public interface BoardMapper {
 
     void updatePost(Post post);
 
-//    Optional<Student> selectStudent(long id);
-//    List<Student> selectStudents();
-//    void insertStudent(Student student);
-//    void updateNameById(String name, long id);
-//    void deleteById(long id);
+    void deletePost(Long postId);
 }

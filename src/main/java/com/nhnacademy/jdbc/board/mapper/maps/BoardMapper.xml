@@ -5,6 +5,7 @@
     <select id="selectPosts" resultType="com.nhnacademy.jdbc.board.domain.Post">
         SELECT *
         FROM Post
+        WHERE is_deleted=false
     </select>
 
     <select id="selectPost" resultType="com.nhnacademy.jdbc.board.domain.Post">
@@ -21,19 +22,14 @@
     <update id="updatePost">
         UPDATE Post
         SET title=#{title}, content=#{content}, modifier_id=#{modifierId}
-        WHERE id=#{id};
+        WHERE id=#{id}
     </update>
+    <delete id="deletePost">
+        UPDATE Post
+        SET is_deleted = true
+        WHERE id=#{id}
+    </delete>
 </mapper>
-
-<!--    <insert id="insertStudent">-->
-<!--#         insert into JdbcStudents(id, name, created_at)-->
-<!--#         values (#{id}, '${name}', #{\createdAt})-->
-<!--    </insert>-->
-
-<!--    <update id="updateNameById">-->
-<!--#         update JdbcStudents set name='${name}'-->
-<!--#         where id = #{id}-->
-<!--    </update>-->
 
 <!--    <delete id="deleteById">-->
 <!--#         delete from JdbcStudents where id=#{id}-->

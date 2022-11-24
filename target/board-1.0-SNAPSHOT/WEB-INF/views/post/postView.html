@@ -14,5 +14,6 @@
   작성일시: <span th:text="${post.createdAt}"></span> <br/>
 
   <a th:href="@{'/update/' + ${post.id}}">수정하기</a>
+  <a th:href="@{'/delete/' + ${post.id}}">삭제하기</a>
 </body>
 </html>
