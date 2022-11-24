@@ -24,7 +24,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@CookieValue(value = LOGIN_SESSION, required = false) String session) {
         if (Objects.nonNull(session)) {
-            return "index";
+            return "post/postList";
         }
         return "user/loginForm";
     }
@@ -39,7 +39,7 @@ public class LoginController {
 
         if (userLoginService.matches(id, password)) {
             session.setAttribute(LOGIN_SESSION, id);
-            return "index/index";
+            return "redirect:/";
         }
 
         return "redirect:/login";

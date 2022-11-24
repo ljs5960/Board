@@ -7,13 +7,14 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/")
 @Slf4j
 public class BoardController {
     private final BoardService boardService;
@@ -30,10 +31,10 @@ public class BoardController {
         return "post/postList";
     }
 
-    @GetMapping("/post{postId}")
-    public String getPost() {
-        return "post/post";
-    }
+//    @GetMapping("/{postId}")
+//    public String getPost() {
+//        return "post/post";
+//    }
 
     @GetMapping("/write")
     public String insertPost() {
@@ -42,10 +43,11 @@ public class BoardController {
 
     @PostMapping("/write")
     public String insertPost(@RequestParam("title") String title,
-                             @RequestParam("content") String content) {
+                             @RequestParam("content") String content,
+                             @CookieValue(value = "SESSION_VALUE", required = false) String userId) {
         Post post = new Post(title, content, "testId");
         boardService.insertPost(post);
 
-        return "redirect:/post";
+        return "redirect:/";
     }
 }
