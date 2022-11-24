@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BoardService {
-//    List<Post> getPosts();
+    List<Post> getPosts();
 //
 //    Optional<Post> getPost(Long id);
 
     void insertPost(Post post);
+
 }

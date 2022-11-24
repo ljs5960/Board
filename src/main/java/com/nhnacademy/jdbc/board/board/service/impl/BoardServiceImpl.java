@@ -16,10 +16,10 @@ public class BoardServiceImpl implements BoardService {
         this.boardMapper = boardMapper;
     }
 
-//    @Override
-//    public List<Post> getPosts() {
-//        return boardMapper.selectPosts();
-//    }
+    @Override
+    public List<Post> getPosts() {
+        return boardMapper.selectPosts();
+    }
 
 //
 

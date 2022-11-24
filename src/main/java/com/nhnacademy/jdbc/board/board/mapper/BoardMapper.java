@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BoardMapper {
+    List<Post> selectPosts();
+
 //    Optional<Post> selectPost(Long id);
 //
-//    List<Post> selectPosts();
 
     void insertPost(Post post);
 
