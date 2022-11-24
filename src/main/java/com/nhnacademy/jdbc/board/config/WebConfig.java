@@ -63,7 +63,7 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware, Mes
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setSuffix(".html");
+        templateResolver.setSuffix(".jsp");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         return templateResolver;
     }

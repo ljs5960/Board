@@ -8,6 +8,7 @@
     <artifactId>board</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

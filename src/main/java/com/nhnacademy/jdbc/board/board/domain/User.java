@@ -1,4 +1,4 @@
-package com.nhnacademy.jdbc.board.student.domain;
+package com.nhnacademy.jdbc.board.board.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

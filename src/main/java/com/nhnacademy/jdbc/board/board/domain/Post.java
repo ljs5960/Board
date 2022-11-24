@@ -1,4 +1,4 @@
-package com.nhnacademy.jdbc.board.student.domain;
+package com.nhnacademy.jdbc.board.board.domain;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -7,13 +7,23 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Post {
-    private final Long id;
-    private final String title;
-    private final String content;
-    private final Long fileId;
-    private final Long userId;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime modifiedAt;
-    private final Boolean isDeleted;
-    private final Long parentPostId;
+    private Long id;
+    private String title;
+    private String content;
+    private Long fileId;
+    private String userId;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private Boolean isDeleted;
+    private Long parentPostId;
+
+    public Post(String title, String userId) {
+        this.title = title;
+        this.userId = userId;
+    }
+
+    public Post(String title, String content, String userId) {
+        this(title, userId);
+        this.content = content;
+    }
 }
