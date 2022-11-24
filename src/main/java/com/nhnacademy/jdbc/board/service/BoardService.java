@@ -9,5 +9,4 @@ public interface BoardService {
 //    Optional<Post> getPost(Long id);
 
     void insertPost(Post post);
-
 }
