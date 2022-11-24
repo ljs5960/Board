@@ -30,8 +30,3 @@
         WHERE id=#{id}
     </delete>
 </mapper>
-
-<!--    <delete id="deleteById">-->
-<!--#         delete from JdbcStudents where id=#{id}-->
-<!--    </delete>-->
-<!--        </mapper>-->

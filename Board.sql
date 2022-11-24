@@ -18,14 +18,16 @@ CREATE TABLE `Post` (
 	`content`	TEXT	NOT NULL,
 	`file_id`	INT	NULL,
 	`user_id`	VARCHAR(10)	NOT NULL,
+    `modifier_id` VARCHAR(10),
 	`created_at`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modified_at`	DATETIME	NULL ON UPDATE CURRENT_TIMESTAMP,
-	`is_deleted`	BOOLEAN	NULL,
+	`is_deleted`	BOOLEAN	NULL DEFAULT false,
 	`parent_post_id`	INT	NULL,
     
     PRIMARY KEY(id),
     FOREIGN KEY(file_id) REFERENCES File(file_id),
     FOREIGN KEY(user_id) REFERENCES User(id),
+    FOREIGN KEY(modifier_id) REFERENCES User(id),
     FOREIGN KEY(parent_post_id) REFERENCES Post(id)
 );
 
