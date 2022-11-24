@@ -15,11 +15,11 @@ DROP TABLE IF EXISTS `Post`;
 CREATE TABLE `Post` (
 	`id`	INT	NOT NULL AUTO_INCREMENT,
 	`title`	VARCHAR(50)	NOT NULL,
-	`content`	TEXT	NULL,
+	`content`	TEXT	NOT NULL,
 	`file_id`	INT	NULL,
 	`user_id`	VARCHAR(10)	NOT NULL,
-	`created_at`	DATETIME	NOT NULL,
-	`modified_at`	DATETIME	NULL,
+	`created_at`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`modified_at`	DATETIME	NULL ON UPDATE CURRENT_TIMESTAMP,
 	`is_deleted`	BOOLEAN	NULL,
 	`parent_post_id`	INT	NULL,
     
@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `Comment`;
 CREATE TABLE `Comment` (
 	`id`	INT	NOT NULL AUTO_INCREMENT,
 	`content`	TEXT	NOT NULL,
-	`created_at`	DATETIME	NOT NULL,
+	`created_at`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`user_id`	VARCHAR(10)	NOT NULL,
 	`post_id`	INT	NOT NULL,
 	`parent_comment_id`	INT	NULL,
