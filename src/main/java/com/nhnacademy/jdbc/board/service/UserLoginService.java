@@ -1,5 +1,6 @@
 package com.nhnacademy.jdbc.board.service;
 
+
 import com.nhnacademy.jdbc.board.domain.User;
 
 public interface UserLoginService {

@@ -11,14 +11,14 @@ public class Post {
     private String title;
     private String content;
     private Long fileId;
-    private String userId;
+    private Long userId;
     private String modifierId;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Boolean isDeleted;
     private Long parentPostId;
 
-    public Post(String title, String content, String userId) {
+    public Post(String title, String content, Long userId) {
         this.title = title;
         this.content = content;
         this.userId = userId;

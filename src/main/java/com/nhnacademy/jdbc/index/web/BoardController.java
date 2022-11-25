@@ -64,8 +64,8 @@ public class BoardController {
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute(LOGIN_SESSION_KEY);
-
-        Post post = new Post(title, content, userId);
+        String userId = boardService.getIdByName(userName);
+        Post post = new Post(title, content, userName);
         boardService.insertPost(post);
 
         return "redirect:/board";
@@ -74,7 +74,7 @@ public class BoardController {
     @GetMapping("/update/{postId}")
     public String updatePost(@PathVariable("postId") Long postId, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
-        modelMap.put("post", post);
+        modelMap.addAttribute("post", post);
 
         return "post/postUpdateForm";
     }
