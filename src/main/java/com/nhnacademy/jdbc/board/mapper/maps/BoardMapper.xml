@@ -29,4 +29,15 @@
         SET is_deleted = true
         WHERE id=#{id}
     </delete>
+
+    <update id="insertComment">
+        INSERT INTO Comment (content, user_id, post_id)
+        VALUES (#{content}, #{userId}, #{postId})
+    </update>
+    
+    <select id="selectComment" resultType="com.nhnacademy.jdbc.board.domain.Comment">
+        SELECT *
+        FROM Comment
+        WHERE post_id=#{postId}
+    </select>
 </mapper>

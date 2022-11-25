@@ -1,5 +1,6 @@
 package com.nhnacademy.jdbc.board.service.impl;
 
+import com.nhnacademy.jdbc.board.domain.Comment;
 import com.nhnacademy.jdbc.board.domain.Post;
 import com.nhnacademy.jdbc.board.mapper.BoardMapper;
 import com.nhnacademy.jdbc.board.service.BoardService;
@@ -38,5 +39,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void deletePost(Long postId) {
         boardMapper.deletePost(postId);
+    }
+
+    @Override
+    public void insertComment(Comment comment) {
+        boardMapper.insertComment(comment);
+    }
+
+    @Override
+    public List<Comment> getCommentByPostId(Long postId) {
+        return boardMapper.selectComment(postId);
     }
 }

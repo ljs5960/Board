@@ -1,5 +1,6 @@
 package com.nhnacademy.jdbc.board.mapper;
 
+import com.nhnacademy.jdbc.board.domain.Comment;
 import com.nhnacademy.jdbc.board.domain.Post;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +16,8 @@ public interface BoardMapper {
     void updatePost(Post post);
 
     void deletePost(Long postId);
+
+    void insertComment(Comment comment);
+
+    List<Comment> selectComment(Long postId);
 }

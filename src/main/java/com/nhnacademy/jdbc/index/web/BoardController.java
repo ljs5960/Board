@@ -1,12 +1,12 @@
 package com.nhnacademy.jdbc.index.web;
 
+import com.nhnacademy.jdbc.board.domain.Comment;
 import com.nhnacademy.jdbc.board.domain.Post;
 import com.nhnacademy.jdbc.board.service.BoardService;
 import com.nhnacademy.jdbc.board.service.impl.BoardServiceImpl;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@Slf4j
 public class BoardController {
     private final BoardService boardService;
 
     public BoardController(BoardServiceImpl boardService) {
         this.boardService = boardService;
     }
+
+    String LOGIN_SESSION_KEY = "LOGIN_SESSION";
 
     @GetMapping("/")
     public String getPosts(ModelMap modelMap) {
@@ -34,7 +35,10 @@ public class BoardController {
     @GetMapping("/{postId}")
     public String getPost(@PathVariable("postId") Long postId, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
-        modelMap.put("post", post);
+        List<Comment> comments = boardService.getCommentByPostId(postId);
+
+        modelMap.addAttribute("post", post);
+        modelMap.addAttribute("comments", comments);
 
         return "post/postView";
     }
@@ -49,7 +53,7 @@ public class BoardController {
                              @RequestParam("content") String content,
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String userId = (String) session.getAttribute("LOGIN_SESSION");
+        String userId = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
         Post post = new Post(title, content, userId);
         boardService.insertPost(post);
@@ -70,7 +74,7 @@ public class BoardController {
                              @RequestParam("content") String content,
                              @PathVariable("postId") Long postId,
                              HttpSession session) {
-        String modifierId = (String) session.getAttribute("LOGIN_SESSION");
+        String modifierId = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
         Post post = new Post(postId, title, content, modifierId);
         boardService.updatePost(post);
@@ -83,5 +87,18 @@ public class BoardController {
         boardService.deletePost(postId);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/comment/{postId}")
+    public String insertComment(@RequestParam("content")String content,
+                                @PathVariable("postId")Long postId,
+                                HttpSession session) {
+        String userId = (String) session.getAttribute(LOGIN_SESSION_KEY);
+
+        Comment comment = new Comment(content, userId, postId);
+
+        boardService.insertComment(comment);
+
+        return "redirect:/{postId}";
     }
 }

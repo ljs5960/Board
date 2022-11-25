@@ -1,5 +1,6 @@
 package com.nhnacademy.jdbc.board.service;
 
+import com.nhnacademy.jdbc.board.domain.Comment;
 import com.nhnacademy.jdbc.board.domain.Post;
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface BoardService {
     void updatePost(Post post);
 
     void deletePost(Long postId);
+
+    void insertComment(Comment comment);
+
+    List<Comment> getCommentByPostId(Long postId);
 }

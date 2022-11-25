@@ -40,12 +40,10 @@ CREATE TABLE `Comment` (
 	`created_at`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`user_id`	VARCHAR(10)	NOT NULL,
 	`post_id`	INT	NOT NULL,
-	`parent_comment_id`	INT	NULL,
     
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES User(id),
-    FOREIGN KEY(post_id) REFERENCES Post(id),
-    FOREIGN KEY(parent_comment_id) REFERENCES Comment(id)
+    FOREIGN KEY(post_id) REFERENCES Post(id)
 );
 
 
