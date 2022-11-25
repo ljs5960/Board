@@ -21,7 +21,7 @@
     <tbody>
       <tr th:each="post: ${posts}">
         <td th:text="${post.id}"></td>
-        <td th:text="${post.title}"></td>
+        <td th:text="${post.title} + '(' + ${post.commentCount} + ')'"></td>
         <td th:text="${post.userName}"></td>
         <td th:text="${post.createdAt}"></td>
         <td><a th:href="@{'/board/' + ${post.id}}">상세보기</a></td>
