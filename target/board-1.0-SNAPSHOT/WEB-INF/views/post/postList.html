@@ -21,11 +21,11 @@
         <td th:text="${post.title}"></td>
         <td th:text="${post.userId}"></td>
         <td th:text="${post.createdAt}"></td>
-        <td><a th:href="@{'/' + ${post.id}}">상세보기</a></td>
+        <td><a th:href="@{'/board/' + ${post.id}}">상세보기</a></td>
       </tr>
     </tbody>
   </table>
 
-  <a th:href="@{/write}">게시글 등록하기</a>
+  <a th:href="@{/board/write}">게시글 등록하기</a>
 </body>
 </html>

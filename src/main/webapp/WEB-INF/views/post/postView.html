@@ -32,14 +32,14 @@
     </tbody>
   </table>
 
-  <form method="post" th:action="@{'/comment/' + ${post.id}}">
+  <form method="post" th:action="@{'/board/comment/' + ${post.id}}">
     <input type="text" name="content" required>
     <input type="submit" value="댓글입력">
   </form>
 
   <br/>
 
-  <a th:href="@{'/update/' + ${post.id}}">수정하기</a>
-  <a th:href="@{'/delete/' + ${post.id}}">삭제하기</a>
+  <a th:href="@{'/board/update/' + ${post.id}}">수정하기</a>
+  <a th:href="@{'/board/delete/' + ${post.id}}">삭제하기</a>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class LoginController {
 
         if (userLoginService.matches(id, password)) {
             session.setAttribute(LOGIN_SESSION, id);
-            return "redirect:/";
+            return "redirect:/board";
         }
 
         return "redirect:/login";

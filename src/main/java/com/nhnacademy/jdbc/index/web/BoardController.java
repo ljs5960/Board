@@ -5,6 +5,7 @@ import com.nhnacademy.jdbc.board.domain.Post;
 import com.nhnacademy.jdbc.board.service.BoardService;
 import com.nhnacademy.jdbc.board.service.impl.BoardServiceImpl;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
 
@@ -24,8 +27,8 @@ public class BoardController {
 
     String LOGIN_SESSION_KEY = "LOGIN_SESSION";
 
-    @GetMapping("/")
-    public String getPosts(ModelMap modelMap) {
+    @GetMapping()
+    public String getPosts(HttpSession session, ModelMap modelMap) {
         List<Post> posts = boardService.getPosts();
         modelMap.put("posts", posts);
 
@@ -33,19 +36,26 @@ public class BoardController {
     }
 
     @GetMapping("/{postId}")
-    public String getPost(@PathVariable("postId") Long postId, ModelMap modelMap) {
+    public String getPost(@PathVariable("postId") Long postId, HttpSession session, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
         List<Comment> comments = boardService.getCommentByPostId(postId);
 
         modelMap.addAttribute("post", post);
         modelMap.addAttribute("comments", comments);
 
-        return "post/postView";
+        if (Objects.nonNull(session.getAttribute(LOGIN_SESSION_KEY))) {
+            return "post/postView";
+        }
+
+        return "post/postViewNoComment";
     }
 
     @GetMapping("/write")
-    public String insertPost() {
-        return "post/postForm";
+    public String insertPost(HttpSession session) {
+        if (Objects.nonNull(session.getAttribute(LOGIN_SESSION_KEY))) {
+            return "post/postForm";
+        }
+        return "redirect:/login";
     }
 
     @PostMapping("/write")
@@ -58,7 +68,7 @@ public class BoardController {
         Post post = new Post(title, content, userId);
         boardService.insertPost(post);
 
-        return "redirect:/";
+        return "redirect:/board";
     }
 
     @GetMapping("/update/{postId}")
@@ -79,14 +89,14 @@ public class BoardController {
         Post post = new Post(postId, title, content, modifierId);
         boardService.updatePost(post);
 
-        return "redirect:/";
+        return "redirect:/board/{postId}";
     }
 
     @GetMapping("/delete/{postId}")
     public String deletePost(@PathVariable("postId") Long postId) {
         boardService.deletePost(postId);
 
-        return "redirect:/";
+        return "redirect:/board";
     }
 
     @PostMapping("/comment/{postId}")
@@ -99,6 +109,6 @@ public class BoardController {
 
         boardService.insertComment(comment);
 
-        return "redirect:/{postId}";
+        return "redirect:/board/{postId}";
     }
 }
