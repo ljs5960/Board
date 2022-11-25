@@ -11,23 +11,23 @@ public class Post {
     private String title;
     private String content;
     private Long fileId;
-    private Long userId;
-    private String modifierId;
+    private String userName;
+    private String modifierName;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Boolean isDeleted;
     private Long parentPostId;
 
-    public Post(String title, String content, Long userId) {
+    public Post(String title, String content, String userName) {
         this.title = title;
         this.content = content;
-        this.userId = userId;
+        this.userName = userName;
     }
 
-    public Post(Long id, String title, String content, String modifierId) {
+    public Post(Long id, String title, String content, String modifierName) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.modifierId = modifierId;
+        this.modifierName = modifierName;
     }
 }

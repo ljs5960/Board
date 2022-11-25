@@ -6,6 +6,7 @@
         SELECT *
         FROM Post
         WHERE is_deleted=false
+        ORDER BY id DESC
     </select>
 
     <select id="selectPost" resultType="com.nhnacademy.jdbc.board.domain.Post">
@@ -16,14 +17,15 @@
 
     <insert id="insertPost" >
         INSERT INTO Post (title, content, user_id)
-        VALUES (#{title}, #{content}, #{userId})
+        VALUES (#{title}, #{content}, #{userName})
     </insert>
 
     <update id="updatePost">
         UPDATE Post
-        SET title=#{title}, content=#{content}, modifier_id=#{modifierId}
+        SET title=#{title}, content=#{content}, modifier_id=#{modifierName}
         WHERE id=#{id}
     </update>
+
     <delete id="deletePost">
         UPDATE Post
         SET is_deleted = true
@@ -32,12 +34,13 @@
 
     <update id="insertComment">
         INSERT INTO Comment (content, user_id, post_id)
-        VALUES (#{content}, #{userId}, #{postId})
+        VALUES (#{content}, #{userName}, #{postId})
     </update>
     
     <select id="selectComment" resultType="com.nhnacademy.jdbc.board.domain.Comment">
         SELECT *
         FROM Comment
         WHERE post_id=#{postId}
+        ORDER BY id DESC
     </select>
 </mapper>

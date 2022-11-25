@@ -10,12 +10,12 @@ public class Comment {
     private Long id;
     private String content;
     private LocalDateTime createdAt;
-    private String userId;
+    private String userName;
     private Long postId;
 
-    public Comment(String content, String userId, Long postId) {
+    public Comment(String content, String userName, Long postId) {
         this.content = content;
-        this.userId = userId;
+        this.userName = userName;
         this.postId = postId;
     }
 }

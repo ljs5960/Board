@@ -26,7 +26,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-//    @Transactional
     public void insertPost(Post post) {
         boardMapper.insertPost(post);
     }

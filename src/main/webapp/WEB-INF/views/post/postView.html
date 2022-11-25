@@ -9,7 +9,7 @@
   번호: <span th:text="${post.id}"></span> <br/>
   제목: <span th:text="${post.title}"></span> <br/>
   내용: <span th:text="${post.content}"></span> <br/>
-  작성자: <span th:text="${post.userId}"></span> <br/>
+  작성자: <span th:text="${post.userName}"></span> <br/>
   작성일시: <span th:text="${post.createdAt}"></span> <br/>
 
   <br/>
@@ -27,7 +27,7 @@
       <tr th:each="comment: ${comments}">
         <td th:text="${comment.content}"></td>
         <td th:text="${comment.createdAt}"></td>
-        <td th:text="${comment.userId}"></td>
+        <td th:text="${comment.userName}"></td>
       </tr>
     </tbody>
   </table>

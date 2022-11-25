@@ -43,11 +43,7 @@ public class BoardController {
         modelMap.addAttribute("post", post);
         modelMap.addAttribute("comments", comments);
 
-        if (Objects.nonNull(session.getAttribute(LOGIN_SESSION_KEY))) {
-            return "post/postView";
-        }
-
-        return "post/postViewNoComment";
+        return "post/postView";
     }
 
     @GetMapping("/write")
@@ -63,8 +59,8 @@ public class BoardController {
                              @RequestParam("content") String content,
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String userId = (String) session.getAttribute(LOGIN_SESSION_KEY);
-        String userId = boardService.getIdByName(userName);
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
+
         Post post = new Post(title, content, userName);
         boardService.insertPost(post);
 
@@ -72,11 +68,18 @@ public class BoardController {
     }
 
     @GetMapping("/update/{postId}")
-    public String updatePost(@PathVariable("postId") Long postId, ModelMap modelMap) {
+    public String updatePost(@PathVariable("postId") Long postId, HttpSession session, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
+        String writerName = post.getUserName();
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
+
         modelMap.addAttribute("post", post);
 
-        return "post/postUpdateForm";
+        if (Objects.equals(writerName, userName)) { // 작성자가 같을 경우에만 updateForm 반환
+            return "post/postUpdateForm";
+        } else {
+            return "redirect:/board/{postId}";
+        }
     }
 
     @PostMapping("/update/{postId}")
@@ -84,30 +87,38 @@ public class BoardController {
                              @RequestParam("content") String content,
                              @PathVariable("postId") Long postId,
                              HttpSession session) {
-        String modifierId = (String) session.getAttribute(LOGIN_SESSION_KEY);
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
-        Post post = new Post(postId, title, content, modifierId);
+        Post post = new Post(postId, title, content, userName);
+
         boardService.updatePost(post);
 
         return "redirect:/board/{postId}";
     }
 
     @GetMapping("/delete/{postId}")
-    public String deletePost(@PathVariable("postId") Long postId) {
-        boardService.deletePost(postId);
+    public String deletePost(@PathVariable("postId") Long postId, HttpSession session) {
+        String writerName = boardService.getPostById(postId).getUserName();
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
-        return "redirect:/board";
+        if (!Objects.equals(writerName, userName)) { // 작성자가 다를 경우 deletePost() 없이 게시글 redirect
+            return "redirect:/board/{postId}";
+        } else {
+            boardService.deletePost(postId);
+            return "redirect:/board";
+        }
     }
 
     @PostMapping("/comment/{postId}")
     public String insertComment(@RequestParam("content")String content,
                                 @PathVariable("postId")Long postId,
                                 HttpSession session) {
-        String userId = (String) session.getAttribute(LOGIN_SESSION_KEY);
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
-        Comment comment = new Comment(content, userId, postId);
-
-        boardService.insertComment(comment);
+        if(Objects.nonNull(userName)) { // 로그인 한 경우에만 insertComment() 호출 가능
+            Comment comment = new Comment(content, userName, postId);
+            boardService.insertComment(comment);
+        }
 
         return "redirect:/board/{postId}";
     }

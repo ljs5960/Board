@@ -4,6 +4,9 @@
   <title>Post List</title>
 </head>
 <body>
+  <header>
+    <a href="/login">로그인하기</a>
+  </header>
   <h1>게시글 목록</h1>
 
   <table>
@@ -16,10 +19,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="post, iStat: ${posts}">
-        <td th:text="${iStat.count}"></td>
+      <tr th:each="post: ${posts}">
+        <td th:text="${post.id}"></td>
         <td th:text="${post.title}"></td>
-        <td th:text="${post.userId}"></td>
+        <td th:text="${post.userName}"></td>
         <td th:text="${post.createdAt}"></td>
         <td><a th:href="@{'/board/' + ${post.id}}">상세보기</a></td>
       </tr>
