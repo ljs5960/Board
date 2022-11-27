@@ -18,4 +18,8 @@ public interface BoardService {
     void insertComment(Comment comment);
 
     List<Comment> getCommentByPostId(Long postId);
+
+    List<Post> getDeletedPosts();
+
+    void restorePost(Long postId);
 }

@@ -27,6 +27,9 @@ public class BoardController {
 
     String LOGIN_SESSION_KEY = "LOGIN_SESSION";
 
+    /*
+    게시판 리스트
+     */
     @GetMapping()
     public String getPosts(HttpSession session, ModelMap modelMap) {
         List<Post> posts = boardService.getPosts();
@@ -35,6 +38,9 @@ public class BoardController {
         return "post/postList";
     }
 
+    /*
+    게시글 상세보기
+     */
     @GetMapping("/{postId}")
     public String getPost(@PathVariable("postId") Long postId, HttpSession session, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
@@ -46,6 +52,9 @@ public class BoardController {
         return "post/postView";
     }
 
+    /*
+    글 작성하기 Form
+     */
     @GetMapping("/write")
     public String insertPost(HttpSession session) {
         if (Objects.nonNull(session.getAttribute(LOGIN_SESSION_KEY))) {
@@ -54,6 +63,9 @@ public class BoardController {
         return "redirect:/login";
     }
 
+    /*
+    글 작성하기
+     */
     @PostMapping("/write")
     public String insertPost(@RequestParam("title") String title,
                              @RequestParam("content") String content,
@@ -67,6 +79,9 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    /*
+    게시글 수정하기 Form
+     */
     @GetMapping("/update/{postId}")
     public String updatePost(@PathVariable("postId") Long postId, HttpSession session, ModelMap modelMap) {
         Post post = boardService.getPostById(postId);
@@ -75,13 +90,17 @@ public class BoardController {
 
         modelMap.addAttribute("post", post);
 
-        if (Objects.equals(writerName, userName)) { // 작성자가 같을 경우에만 updateForm 반환
+        // 관리자 혹은 작성자만 updateForm 반환
+        if ((Objects.equals(writerName, userName)) || (Objects.equals("admin", userName))) {
             return "post/postUpdateForm";
         } else {
             return "redirect:/board/{postId}";
         }
     }
 
+    /*
+    게시글 수정하기
+     */
     @PostMapping("/update/{postId}")
     public String updatePost(@RequestParam("title") String title,
                              @RequestParam("content") String content,
@@ -96,30 +115,69 @@ public class BoardController {
         return "redirect:/board/{postId}";
     }
 
+    /*
+    게시글 삭제하기
+     */
     @GetMapping("/delete/{postId}")
     public String deletePost(@PathVariable("postId") Long postId, HttpSession session) {
         String writerName = boardService.getPostById(postId).getUserName();
         String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
-        if (!Objects.equals(writerName, userName)) { // 작성자가 다를 경우 deletePost() 없이 게시글 redirect
-            return "redirect:/board/{postId}";
-        } else {
+        // 관리자 혹은 작성자만 deletePost() 가능
+        if ((Objects.equals(writerName, userName)) || (Objects.equals("admin", userName))) {
             boardService.deletePost(postId);
             return "redirect:/board";
+        } else {
+            return "redirect:/board/{postId}";
         }
     }
 
+    /*
+    댓글 입력하기
+     */
     @PostMapping("/comment/{postId}")
     public String insertComment(@RequestParam("content")String content,
                                 @PathVariable("postId")Long postId,
                                 HttpSession session) {
         String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
 
-        if(Objects.nonNull(userName)) { // 로그인 한 경우에만 insertComment() 호출 가능
+        if (Objects.nonNull(userName)) { // 로그인 한 경우에만 insertComment() 호출 가능
             Comment comment = new Comment(content, userName, postId);
             boardService.insertComment(comment);
         }
 
         return "redirect:/board/{postId}";
+    }
+
+    /*
+    삭제 게시판(관리자 전용)
+     */
+    @GetMapping("/deleted")
+    public String getDeletedPosts(HttpSession session, ModelMap modelMap) {
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
+
+        if (Objects.equals(userName, "admin")) {    // 관리자일시 접속가능
+            List<Post> posts = boardService.getDeletedPosts();
+            modelMap.addAttribute("posts", posts);
+
+            return "post/deletedPostList";
+        }
+
+        return "redirect:/board";
+    }
+
+    /*
+    삭제된 게시글 복구하기
+     */
+    @GetMapping("/deleted/restore/{postId}")
+    public String restoreDeletedPost(@PathVariable("postId") Long postId,
+                                     HttpSession session) {
+        String userName = (String) session.getAttribute(LOGIN_SESSION_KEY);
+
+        if (Objects.equals(userName, "admin")) {
+            boardService.restorePost(postId);
+        }
+
+        return "redirect:/board/deleted";
     }
 }

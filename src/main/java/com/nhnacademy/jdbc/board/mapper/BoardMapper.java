@@ -20,4 +20,8 @@ public interface BoardMapper {
     void insertComment(Comment comment);
 
     List<Comment> selectComment(Long postId);
+
+    List<Post> selectedDeletedPosts();
+
+    void restorePost(Long postId);
 }

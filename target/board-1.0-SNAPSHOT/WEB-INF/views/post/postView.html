@@ -40,6 +40,7 @@
   <br/>
 
   <a th:href="@{'/board/update/' + ${post.id}}">수정하기</a>
-  <a th:href="@{'/board/delete/' + ${post.id}}">삭제하기</a>
+  <a th:if="${post.isDeleted == true}" th:href="@{'/board/deleted/restore/' + ${post.id}}">복구하기</a>
+  <a th:if="${post.isDeleted == false}" th:href="@{'/board/delete/' + ${post.id}}">삭제하기</a>
 </body>
 </html>

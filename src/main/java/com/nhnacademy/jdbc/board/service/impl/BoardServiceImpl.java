@@ -49,4 +49,14 @@ public class BoardServiceImpl implements BoardService {
     public List<Comment> getCommentByPostId(Long postId) {
         return boardMapper.selectComment(postId);
     }
+
+    @Override
+    public List<Post> getDeletedPosts() {
+        return boardMapper.selectedDeletedPosts();
+    }
+
+    @Override
+    public void restorePost(Long postId) {
+        boardMapper.restorePost(postId);
+    }
 }
